@@ -1,34 +1,25 @@
-#include <iostream>
+#include "node.h"
 
-typedef struct ListNode
-{
-    int value;
-    ListNode* next;
-    ListNode(int v): value(v) {}
-} ListNode;
-
-void printList(ListNode* front)
-{
-    ListNode* current = front;
-    while(current != nullptr)
-    {
+void printList(Node* const front) {
+    Node* current = front;
+    while(current != nullptr) {
         std::cout << current->value << " ";
         current = current->next;
+        }
     }
-}
 
-void addFront(ListNode*& front, int value)
-{
-    ListNode* temp = new ListNode(value);
+void addFront(Node*& front, int value) {
+    Node* temp = new Node(value);
     temp->next = front;
     front = temp;
 }
 
 int main()
 {
-    ListNode* list = nullptr;
-    addFront(list, 10);
-    addFront(list, 20);
-    addFront(list, -50);
+    Node* list = nullptr;
+    addFront(list, 56);
+    addFront(list, 34);
+    addFront(list, -1);
+    addFront(list, -17);
     printList(list);
 }
