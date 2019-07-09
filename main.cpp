@@ -34,9 +34,9 @@ int length(Node* const front) {
 void add(Node* const front, int value, int index) {
     Node* curr = front;
     int listLength = length(front);
-    if (index < listLength) {
+    if (index!=0 || index < listLength) {
         int iCurr = 0;
-        while (iCurr < index) {
+        while (iCurr < index - 1) {
         curr = curr->next;
         ++iCurr;
         }
@@ -46,8 +46,38 @@ void add(Node* const front, int value, int index) {
         temp->next = nextNode;
     }
     else {
-        std::cout << "Index larger than length\n";
+        std::cout << "Index zero or larger than length\n";
     }
+}
+
+void removeByIndex(Node* const front, int index) {
+    Node* curr = front;
+    int listLength = length(front);
+    if (index!=0 || index < listLength) {
+        int iCurr = 0;
+        while (iCurr < index - 1) {
+        curr = curr->next;
+        ++iCurr;
+        }
+        Node* prevNode = curr;
+        Node* trash = curr->next;
+        prevNode->next = curr->next->next;
+        delete trash;
+    }
+    else {
+        std::cout << "Index zero or larger than length\n";
+    }
+}
+
+void removeByValue(Node* const front, int value) {
+    Node* curr = front;
+    int listLength = length(front);
+    int index = 0;
+    while (curr->value != value) {
+        ++index;
+        curr = curr->next;
+    }
+    removeByIndex(front, index);
 }
 
 int main() {
@@ -61,5 +91,10 @@ int main() {
     printList(list);
     removeFront(list);
     add(list, 69, 3);
+    printList(list);
+    add(list, 420, 3);
+    removeByIndex(list, 5);
+    printList(list);
+    removeByValue(list, -1);
     printList(list);
 }
