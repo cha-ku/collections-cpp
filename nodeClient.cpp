@@ -101,7 +101,7 @@ void removeEnd(Node* const front) {
         curr = curr->next;
         ++index;
     }
-    Node* lastNode = curr->next;
+    Node* lastNode = curr;
     Node* trash = curr->next->next;
     delete trash;
     lastNode->next = nullptr;
