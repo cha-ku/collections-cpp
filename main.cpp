@@ -50,6 +50,18 @@ void add(Node* const front, int value, int index) {
     }
 }
 
+// linton-dawson suggested to add an addend function which
+// appends a Node to the list
+
+void addend(Node* const front, int value) {
+    Node* curr = front;
+    while(curr->next != nullptr)
+        curr = curr->next;
+    Node* newLastNode = new Node(value);
+    curr->next = newLastNode;
+}
+
+
 void removeByIndex(Node* const front, int index) {
     Node* curr = front;
     int listLength = length(front);
@@ -71,13 +83,28 @@ void removeByIndex(Node* const front, int index) {
 
 void removeByValue(Node* const front, int value) {
     Node* curr = front;
-    int listLength = length(front);
     int index = 0;
     while (curr->value != value) {
         ++index;
         curr = curr->next;
     }
     removeByIndex(front, index);
+}
+
+//Since we have an addend, why not a removeEnd
+
+void removeEnd(Node* const front) {
+    Node* curr = front;
+    int listLength = length(front);
+    int index = 0;
+    while(index != (listLength - 2)) {
+        curr = curr->next;
+        ++index;
+    }
+    Node* lastNode = curr->next;
+    Node* trash = curr->next->next;
+    delete trash;
+    lastNode->next = nullptr;
 }
 
 int main() {
@@ -96,5 +123,10 @@ int main() {
     removeByIndex(list, 5);
     printList(list);
     removeByValue(list, -1);
+    printList(list);
+    addend(list, 51);
+    addend(list, 49);
+    printList(list);
+    removeEnd(list);
     printList(list);
 }
