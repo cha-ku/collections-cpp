@@ -13,6 +13,16 @@ void print(binaryNode* node)
     }
 }
 
+void add(binaryNode*& node, int value)
+{
+    if (node == nullptr)
+        node = new binaryNode(value);
+    else if (node->data > value)
+        add(node->left, value);
+    else if (node->data < value)
+        add(node->right, value);
+}
+
 bool contains(binaryNode* node, int value)
 {
     if (node != nullptr)
@@ -25,6 +35,20 @@ bool contains(binaryNode* node, int value)
     return false;
 }
 
+int getMin(binaryNode* node)
+{
+    if (node->left == nullptr)
+        return node->data;
+    return getMin(node->left);
+}
+
+int getMax(binaryNode* node)
+{
+    if (node->right == nullptr)
+        return node->data;
+    return getMax(node->right);
+}
+
 bool binaryContains(binaryNode* node, int value)
 // only if the given btree is a BST
 {
@@ -33,9 +57,9 @@ bool binaryContains(binaryNode* node, int value)
         if (node->data == value)
             return true;
         if (node->data > value)
-            return (binaryContains(node->left, value));
+            return binaryContains(node->left, value);
         if (node->data < value)
-            return (binaryContains(node->right, value));
+            return binaryContains(node->right, value);
     }
     return false;
 }
@@ -90,8 +114,7 @@ int main()
     broot->right->left = new binaryNode(60);
     broot->right->right = new binaryNode(91);
     broot->right->right->left = new binaryNode(88);
-    // print tree
-    print(root);
+    print(broot);
     std::cout << "\n";
     // search for elements
     std::cout << std::boolalpha << binaryContains(broot, 0) << "\n";
@@ -101,5 +124,20 @@ int main()
     std::cout << std::boolalpha << binaryContains(broot, 91) << "\n";
     std::cout << std::boolalpha << binaryContains(broot, 420) << "\n";
     std::cout << std::boolalpha << binaryContains(broot, 69) << "\n";
+    std::cout << "Minimum element in the tree is " << getMin(broot) << "\n";
+    std::cout << "Maximum element in the tree is " << getMax(broot) << "\n";
+    add(broot, 69);
+    add(broot, 420);
+    // print tree
+    std::cout << "broot - ";
+    print(broot);
+    std::cout << "\n";
+    binaryNode* newbroot = nullptr;
+    add(newbroot, 11);
+    add(newbroot, 29);
+    add(newbroot, 56);
+    std::cout << "newbroot - ";
+    print(newbroot);
+    std::cout << "\n";
     return 0;
 }
